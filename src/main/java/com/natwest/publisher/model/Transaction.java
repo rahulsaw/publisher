@@ -28,7 +28,7 @@ public class Transaction implements Serializable {
     private Type type;
 
     @NotNull(message = CANNOT_BE_EMPTY)
-    private Integer amount;
+    private Double amount;
 
     @NotNull(message = CANNOT_BE_EMPTY)
     private Currency currency;

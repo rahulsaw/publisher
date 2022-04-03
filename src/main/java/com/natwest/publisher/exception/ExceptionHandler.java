@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.servlet.http.HttpServletRequest;
+
+import static com.natwest.publisher.exception.PublisherApiException.SOMETHING_WENT_WRONG;
+
 /*
 created by Rahul sawaria on 03/04/22
 */
@@ -33,6 +37,13 @@ public class ExceptionHandler {
     protected RestApiResponse publisherExceptionHandler(PublisherBaseException exception) {
         logger.error("Exception name : {} and message is : {}", exception.getName(), exception.getMessage());
         return RestApiResponse.buildFail(exception.getName(), exception.getMessage());
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    protected RestApiResponse genericExceptionHandler(Exception exception, HttpServletRequest httpServletRequest) {
+        return RestApiResponse.buildFail(RestApiResponse.MessageApiResponse.build(SOMETHING_WENT_WRONG.name(), SOMETHING_WENT_WRONG.getMessage()));
     }
 
     private String getErrorMessage(BindingResult bindingResult) {

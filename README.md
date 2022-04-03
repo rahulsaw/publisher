@@ -18,8 +18,11 @@ c.)After installation of jdk, set the publisher service java version to 17 : **s
 
 This is a maven based project so first install all the dependencies by using command : **mvn clean install -DskipTests**
 
-We are using embedded tomcat so no need to link external tomcat, just run the project and your service is up.
+We are using embedded tomcat so no need to link external tomcat, just run it, and your service is up.
+
+Note: Before push transaction to other service please change the server port and listener domain url in application.properties.
 
 You can check the health of service by using following end point :
 
-**{domainUrl}:8080/publisher/healthcheck**
+**{domainUrl}:{port}/publisher/healthcheck**
+

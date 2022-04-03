@@ -16,7 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.SerializationUtils;
 
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Objects;
+
+import static com.natwest.publisher.Constant.CLIENT_KEY;
+import static com.natwest.publisher.Constant.PUBLISHER;
 
 /*
 created by Rahul sawaria on 03/04/22
@@ -37,11 +41,13 @@ public class PublisherServiceImpl implements PublisherService {
         publisherHelper.validateRequest(transaction);
 
         RestApiResponse response = httpClientService.postResponse(listenerClientConfig.getListenerDomainUrl() + listenerClientConfig.getInsertDataUrl(),
-                null, Base64.getEncoder().encodeToString(SerializationUtils.serialize(transaction)),
+                new HashMap<>() {{
+                    put(CLIENT_KEY, PUBLISHER);
+                }}, Base64.getEncoder().encodeToString(SerializationUtils.serialize(transaction)),
                 RestApiResponse.class, RequestServer.LISTENER);
 
         if (response == null || !response.isSuccess() || Objects.isNull(response.getData()))
-            throw new PublisherBaseException(PublisherApiException.SOMETHING_WENT_WRONG.getMessage());
+            throw new PublisherBaseException(response != null ? response.getError().getMessage() : PublisherApiException.SOMETHING_WENT_WRONG.getMessage());
 
         logger.info("Transaction published successfully for account number {}", transaction.getAccountNumber());
 
