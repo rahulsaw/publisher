@@ -8,5 +8,4 @@ public class Constant {
     public static final String CONTENT_TYPE_KEY = "Content-Type";
     public static final String CANNOT_BE_EMPTY = "cannot be empty";
 
-
 }

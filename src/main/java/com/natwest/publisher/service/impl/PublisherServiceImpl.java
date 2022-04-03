@@ -42,6 +42,7 @@ public class PublisherServiceImpl implements PublisherService {
 
         if (response == null || !response.isSuccess() || Objects.isNull(response.getData()))
             throw new PublisherBaseException(PublisherApiException.SOMETHING_WENT_WRONG.getMessage());
+
         logger.info("Transaction published successfully for account number {}", transaction.getAccountNumber());
 
         return "transaction inserted successfully";

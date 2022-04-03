@@ -11,7 +11,7 @@ created by Rahul sawaria on 03/04/22
 @Data
 public class ListenerClientConfig {
 
-    @Value("${listener.domain.url:localhost:8081//listener/}")
+    @Value("${listener.domain.url:localhost:8081/listener/}")
     private String listenerDomainUrl;
 
     @Value("${receive.data.url:insert-data}")
